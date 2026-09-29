@@ -1,0 +1,244 @@
+definitions:
+  models.PhonesRes:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.UserPhoneDb'
+        type: array
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  models.Res:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  models.UserAuthReq:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+    type: object
+  models.UserAuthRes:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+      token:
+        type: string
+    type: object
+  models.UserPhoneDb:
+    properties:
+      description:
+        type: string
+      is_fax:
+        type: boolean
+      phone:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  models.UserPhoneReq:
+    properties:
+      description:
+        type: string
+      is_fax:
+        type: boolean
+      phone:
+        type: string
+    type: object
+  models.UserPhoneUpdateReq:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      is_fax:
+        type: boolean
+      phone:
+        type: string
+    type: object
+  models.UserRes:
+    properties:
+      age:
+        type: integer
+      error:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      success:
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /user/{name}:
+    get:
+      parameters:
+      - description: name
+        in: path
+        name: name
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.UserRes'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.UserRes'
+  /user/auth:
+    post:
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserAuthReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserAuthRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.UserAuthRes'
+  /user/phone:
+    get:
+      parameters:
+      - description: query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PhonesRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.PhonesRes'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.PhonesRes'
+    post:
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserPhoneReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Res'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Res'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Res'
+    put:
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserPhoneUpdateReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Res'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Res'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Res'
+  /user/phone/{phone}:
+    delete:
+      parameters:
+      - description: phone
+        in: path
+        name: phone
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Res'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Res'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Res'
+  /user/register:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - description: login
+        in: query
+        name: login
+        required: true
+        type: string
+      - description: password
+        in: query
+        name: password
+        required: true
+        type: string
+      - description: username
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: age
+        in: query
+        name: age
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Res'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Res'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Res'
+swagger: "2.0"
